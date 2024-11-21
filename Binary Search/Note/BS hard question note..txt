@@ -1,0 +1,57 @@
+To  solve tough bs questions like (Allocate min pages, Make m boques, Painters partition) etc...follow these steps.
+
+1) figure out a fuction to find/make/Figure out to make k things...for example
+	in the question make m boques...we need a fuction to find how many boques will be able to make under the given k constraint.
+	in the question painters partition , we need to figure out a function that calculates the time takes to finish painting by making 
+	k sub-arrays...
+	Ex: 
+long long possible(vector<int> arr, int mid)
+    {
+        int count=0;
+        int temp=0;
+        for(int i=0;i<arr.size();i++)
+        {
+            temp+=arr[i];
+            if(temp>mid)
+            {
+                count++;
+                temp=arr[i];
+            }
+        }
+        count++;
+        cout<<"count is "<<count<<endl;
+        return count;
+    }
+
+int flowerpossible(vector<int> &arr, int mid,int k)
+    {
+        int temp=0;
+        int count=0;
+        for(int i=0;i<arr.size();i++)
+        {
+            if(arr[i]<=mid)
+            {
+                temp++;
+            }
+            else
+            {
+                count+=(int)floor(temp/k);
+                temp=0;
+            }
+        }
+        if(temp!=0) count+=(int)floor(temp/k);
+        return count;
+    }
+
+2) after the step 1 , when u read the question in some hard question, usually level 2 questions where they ask min(max) and max(min), u  dont need to think too much..
+	all you had to do is to figure out where the <= or >= signs to be used to get min(max) max(min) vice versa.
+
+	Ex:
+		See the rough idea in the picture uploaded in the next file..it shows the logic which sign, <= or >= sighn to be used, below image of painters partition
+		
+	 this was used in painters partition
+			
+--------->	 if(ans>=m) high=mid-1;
+            else low=mid+1;
+
+	so all u have to do is figure out the above code for min(max) and max(min)
