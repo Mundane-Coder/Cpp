@@ -5,49 +5,33 @@
 //                                                                                        | HERE IS OUR ANSWER.                                                                   
 #include<bits/stdc++.h>
 using namespace std;
-int anscows(vector<int> stalls, int k, int mid)
-    {
-        k--;
-        int l=0;
-        for(int i=0;i<stalls.size();i++)
-        {
-            if(stalls[i]-stalls[l]>=mid && k>0)
-            {
-                cout<<"k value for mid  "<<k<<"  "<<mid<<endl;
-                k--;
-                l=i;
+class Solution {
+  public:
+    int possible(vector<int> &nums, int mid){
+        int k=0, i=0, next=0;
+        while(i < nums.size()){
+            if(nums[i] >= next){
+                k++;
+                next=nums[i] + mid;
             }
+            i++;
         }
-        cout<<" final k "<<k<<endl;
-        if(k==0)
-        {
-        cout<<"mid value "<<mid<<endl;    
-        return mid;
-        } 
-        else
-        return 0;
+        return k;
     }
-
     int aggressiveCows(vector<int> &stalls, int k) {
-
-        // Write your code here
         sort(stalls.begin(), stalls.end());
-        int low=1;
-        int high=stalls[stalls.size()-1];
-        while(low<=high)
-        {
+        int low=0, high=stalls.back() - stalls.front();
+        while(low <= high){
             int mid=(low+high)/2;
-            cout<<"high value and mid  "<<high<<"  "<<mid<<endl;
-            int ans=anscows(stalls,k,mid);
-            if(ans==mid)
-            low=mid+1;
+            int val = possible(stalls, mid);
+            if(val <  k)
+                high=mid-1;
             else
-            high=mid-1;
+                low=mid+1;
         }
-        int answer=anscows(stalls,k,high);
-        if(answer=high) return high;
-        else return -1;
-        }
+        return high;
+    }
+};
     int main()
     {
         vector<int> stalls={1,2,3,4,7};
